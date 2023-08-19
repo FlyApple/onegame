@@ -5,6 +5,21 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance = null;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private static Dictionary<int, UILayout> _layouts = new Dictionary<int, UILayout>();
+    public static bool InitLayout(UILayout layout)
+    {
+        if(UIManager._layouts.ContainsKey((int)layout.Index))
+        {
+            return false;
+        }
+        UIManager._layouts.Add((int)layout.Index, layout);
+        return false;
+    }
+
     private static Dictionary<UIPanelIndex, UIIPanel> _panels = new Dictionary<UIPanelIndex, UIIPanel>();
     public static bool InitPanel(UIIPanel panel)
     {

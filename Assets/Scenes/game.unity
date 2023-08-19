@@ -236,6 +236,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460ad3b0b17254c42859e720ddbcdc7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _state_index: -1
+  _state_name: invalid
 --- !u!1001 &114085842
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -480,6 +482,7 @@ GameObject:
   - component: {fileID: 271674459}
   - component: {fileID: 271674461}
   - component: {fileID: 271674460}
+  - component: {fileID: 271674462}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -514,7 +517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67324b03e41ca4c119a28fe6a6ec761b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIInstance: {fileID: 1494659797}
+  UIInstance: {fileID: 0}
   GameInstance: {fileID: 0}
 --- !u!114 &271674461
 MonoBehaviour:
@@ -530,6 +533,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FPSMaxLimit: 60
   DontDestroy: 1
+--- !u!114 &271674462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271674458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44e4a164e2e7d48a5a19f29bc3ef2657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FPS: {fileID: 0}
+  FPSEnabled: 0
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -855,7 +872,6 @@ GameObject:
   m_Component:
   - component: {fileID: 874193588}
   - component: {fileID: 874193590}
-  - component: {fileID: 874193591}
   m_Layer: 5
   m_Name: SafeArea
   m_TagString: Untagged
@@ -893,18 +909,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 874193587}
   m_CullTransparentMesh: 1
---- !u!114 &874193591
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 874193587}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18002940678ca4a8d9b1fe949f9be64b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1111276591
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1234,11 +1238,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1494659792}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44e4a164e2e7d48a5a19f29bc3ef2657, type: 3}
+  m_Script: {fileID: 11500000, guid: 3cc94bcbdba1c42b683569b9772715e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FPS: {fileID: 0}
-  FPSEnabled: 1
+  enabled_safearea: 1
+  _safearea: {fileID: 0}
 --- !u!224 &1517764819 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 593345483343617383, guid: dc4bc1d80e66d4dc8854f6b9a01c0b00,
