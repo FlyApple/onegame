@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -481,7 +481,6 @@ GameObject:
   m_Component:
   - component: {fileID: 271674459}
   - component: {fileID: 271674461}
-  - component: {fileID: 271674460}
   - component: {fileID: 271674462}
   m_Layer: 0
   m_Name: Manager
@@ -505,20 +504,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &271674460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 271674458}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67324b03e41ca4c119a28fe6a6ec761b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UIInstance: {fileID: 0}
-  GameInstance: {fileID: 0}
 --- !u!114 &271674461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -545,8 +530,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44e4a164e2e7d48a5a19f29bc3ef2657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FPS: {fileID: 0}
-  FPSEnabled: 0
+  FPSStats: {fileID: 1517764820}
+  FPSEnabled: 1
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -1242,13 +1227,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enabled_safearea: 1
-  _safearea: {fileID: 0}
+  _safearea:
+  - {fileID: 0}
 --- !u!224 &1517764819 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 593345483343617383, guid: dc4bc1d80e66d4dc8854f6b9a01c0b00,
     type: 3}
   m_PrefabInstance: {fileID: 1111276591}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1517764820 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3579103829151240296, guid: dc4bc1d80e66d4dc8854f6b9a01c0b00,
+    type: 3}
+  m_PrefabInstance: {fileID: 1111276591}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3563b48ea6114201a650f2308ef4db9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1943115324 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5876219878351414439, guid: 7f13497a7202e421b94fe82086232f8e,

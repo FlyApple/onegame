@@ -25,9 +25,9 @@ public enum StateContextStatus
 ///
 public interface IStateListener
 {
-    public IStateContext AddListener(System.Action<IStateContext> action);
-    public IStateContext RemoveListener(System.Action<IStateContext> action);
-    public IStateContext RemoveAllListener(System.Action<IStateContext> action);
+    IStateContext AddListener(System.Action<IStateContext> action);
+    IStateContext RemoveListener(System.Action<IStateContext> action);
+    IStateContext RemoveAllListener(System.Action<IStateContext> action);
 }
 
 /// <summary>
@@ -35,21 +35,21 @@ public interface IStateListener
 /// </summary>
 public interface IStateContext
 {
-    public int Index { get; }
-    public string Name { get; }
-    public StateContextType Type { get; }
-    public StateContextStatus Status { get; }
+    int Index { get; }
+    string Name { get; }
+    StateContextType Type { get; }
+    StateContextStatus Status { get; }
 
     //
-    public IStateListener OnStarting { get; }
-    public IStateListener OnUpdate { get; }
-    public IStateListener OnEnding { get; }
+    IStateListener OnStarting { get; }
+    IStateListener OnUpdate { get; }
+    IStateListener OnEnding { get; }
 
     //
-    public void Start();
-    public void Update();
-    public void Ending();
-    public void Ended();
+    void Start();
+    void Update();
+    void Ending();
+    void Ended();
 
 }
 

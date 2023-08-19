@@ -3,60 +3,68 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//
-public enum UILayoutIndex
+
+namespace MX
 {
     //
-    None    = -1,
-    Base   = 0,
-    SafeArea = 1,
-    //
-    User   = 100,
-}
-
-//
-[RequireComponent(typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster))]
-public class UILayout : MonoBehaviour
-{
-    //
-    protected UILayoutIndex _index = UILayoutIndex.None;
-    public UILayoutIndex Index { get { return this._index; } }
-
-    //
-    protected Camera _camera;
-    protected Canvas _canvas;
-
-    void Awake()
+    public enum UILayoutID
     {
-        this._index = UILayoutIndex.Base;
+        //
+        None = -1,
+        Base = 0,
+        SafeArea = 1,
+        //
+        User = 100,
+    }
 
-        var camera = GameObject.FindObjectOfType<Camera>();
-        this._canvas = this.GetComponent<Canvas>();
-        if(this._canvas.worldCamera == null)
+    //
+    [RequireComponent(typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster))]
+    public class UILayout : MonoBehaviour
+    {
+        //
+        protected int _index = -1;
+        public int Index { get { return this._index; } }
+        public virtual void SetIndex(int index) { this._index = index; }
+        protected UILayoutID _ID = UILayoutID.None;
+        public UILayoutID ID { get { return this._ID; } }
+        protected virtual UILayoutID GetID()  { return UILayoutID.Base; }
+
+        //
+        protected Camera _camera;
+        protected Canvas _canvas;
+
+        void Awake()
         {
-            this._canvas.worldCamera = camera;
+            var camera = GameObject.FindObjectOfType<Camera>();
+            this._canvas = this.GetComponent<Canvas>();
+            if (this._canvas.worldCamera == null)
+            {
+                this._canvas.worldCamera = camera;
+            }
+            this._camera = this._canvas.worldCamera;
+
+            //
+            UIManager.InitLayout(this);
+
+            this.OnReady();
         }
-        this._camera = this._canvas.worldCamera;
 
-        this.OnReady();
+        protected virtual void OnReady()
+        {
 
-        UIManager.InitLayout(this);
+        }
+
+        // Start is called before the first frame update
+        void Start()
+        {
+
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
     }
 
-    protected virtual void OnReady()
-    {
-
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

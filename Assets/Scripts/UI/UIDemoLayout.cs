@@ -4,26 +4,19 @@ using UnityEngine;
 
 using MX;
 
-public class UIPopupPanelDemo : UIPopupPanel
+public class UIDemoLayout : UISafeAreaLayout
 {
-    public static new UIElementID TID { get { return UIElementID.PopupNone + 1; } }
-
-    //
-    public override void OnInitialize()
-    {
-        base.OnInitialize();
-
-    }
+    protected override UILayoutID GetID() { return UILayoutID.User + 1; }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

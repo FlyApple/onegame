@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using MX;
 
 //
-public class UIPanelViewDemo : UIPanel
+public class UIViewDemo : UIView
 {
-    public static new UIPanelIndex TIndex { get { return UIPanelIndex.ViewDemo; } }
+    public static new UIElementID TID { get { return UIElementID.ViewNone + 1; } }
 
     public UIPopupPanelDemo panelDemo;
     public Button button_demo1;
@@ -22,12 +23,10 @@ public class UIPanelViewDemo : UIPanel
     // Start is called before the first frame update
     void Start()
     {
-        this.panelDemo.Active();
-
         //
         this.button_demo1.onClick.AddListener(() =>
         {
-            UIManager.GetPanel<UIPopupPanelDemo>().Show((result) => {
+            UIManager.GetElement<UIPopupPanelDemo>().Show((result) => {
 
             });
         });
