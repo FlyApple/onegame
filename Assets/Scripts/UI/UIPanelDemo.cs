@@ -6,9 +6,9 @@ using UnityEngine.UI;
 using MX;
 
 //
-public class UIViewDemo : UIView
+public class UIPanelDemo : UIPanel
 {
-    public static new UIElementID TID { get { return UIElementID.ViewNone + 1; } }
+    public static new UIElementID TID { get { return UIElementID.PanelNone + 1; } }
 
     public UIPopupPanelDemo panelDemo;
     public Button button_demo1;
@@ -20,8 +20,7 @@ public class UIViewDemo : UIView
 
     }
 
-    // Start is called before the first frame update
-    void Start()
+    void Ready()
     {
         //
         this.button_demo1.onClick.AddListener(() =>

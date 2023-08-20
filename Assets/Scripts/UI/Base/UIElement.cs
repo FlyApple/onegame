@@ -11,6 +11,8 @@ namespace MX
         None = -1,
         //Main Views
         ViewNone = 0,
+        //
+        ViewUser = 10,
 
         //Sub views
         PanelNone = 100,
@@ -24,12 +26,10 @@ namespace MX
 
     public enum UIElementStatus
     {
+        //Base
         None = 0,
         Ready = 1,
-        Opened = 2,
-        Closed = 3,
-        Opening = 7,
-        Closing = 8,
+        Active = 2,
     }
 
 
@@ -54,40 +54,43 @@ namespace MX
     {
         public static UIElementID TID { get { return UIElementID.None; } }
 
-        [SerializeField]
+        /// <summary>
+        /// 
+        /// </summary>
         protected UIElementID _ID = UIElementID.None;
         public UIElementID ID { get { return this._ID; } }
+        protected UILayout _layout = null;
+        public UILayout Layout { get { return this._layout; } }
+
         [SerializeField]
         protected UIElementStatus _status = UIElementStatus.None;
         public UIElementStatus Status { get { return this._status; } }
 
-        [SerializeField]
-        protected bool _ready = false;
-        public bool IsReady { get { return this._ready; } }
+        public bool IsReady { get { return this._status == UIElementStatus.Ready; } }
 
         /// <summary>
         /// 默认不显示：false
         /// </summary>
-        [SerializeField]
-        protected bool _active = false;
+        protected virtual bool GetActiveOn() { return false; }
+        protected bool IsActive { get { return this.GetActiveOn(); } }
 
+        protected virtual bool CheckReadyAll() { return false; }
 
         void Awake()
         {
-            if (!this._ready)
+            if (this._status == UIElementStatus.None)
             {
                 this.OnInitialize();
 
                 this.OnReady();
 
                 // 如果默认不显示这里在初始化后，立即执行非激活。
-                if (!this._active)
+                if (!this.IsActive)
                 {
                     this.gameObject.SetActive(false);
                 }
 
                 //
-                this._ready = true;
                 this._status = UIElementStatus.Ready;
             }
         }
@@ -95,7 +98,7 @@ namespace MX
         void Ready()
         {
             //没有调用Awake
-            if (this._ready == false)
+            if (this._status == UIElementStatus.None)
             {
                 this.gameObject.SetActive(true);
             }
@@ -106,27 +109,36 @@ namespace MX
         /// </summary>
         void OnEnable()
         {
-            if(this._ready)
+            if(this._status == UIElementStatus.Ready)
             {
-                this.ShowImpl();
+                this.OnActive();
+
+                this._status = UIElementStatus.Active;
             }
         }
 
         void OnDisable()
         {
+            if(this._status ==  UIElementStatus.Active)
+            {
+                this._status = UIElementStatus.Ready;
+            }
         }
 
         protected virtual void OnReady()
         {
-            int count = this.transform.childCount;
-            for(int i = 0; i < count; i ++)
+            if (this.CheckReadyAll())
             {
-                var child = this.transform.GetChild(i).GetComponent<UIElement>();
-                if(child == null)
+                int count = this.transform.childCount;
+                for (int i = 0; i < count; i++)
                 {
-                    continue;
+                    var child = this.transform.GetChild(i).GetComponent<UIElement>();
+                    if (child == null)
+                    {
+                        continue;
+                    }
+                    this._layout.InvokeElementReadyMethod(child, child.GetType());
                 }
-                child.Ready();
             }
         }
 
@@ -158,12 +170,20 @@ namespace MX
                 return;
             }
             this._ID = Id;
-
+            this._layout = this.transform.root.GetComponent<UILayout>();
             if(!UIManager.InitElement(this))
             {
                 Debug.LogWarning("[UIElement] (Initialize) Init Element (" + Id + ") failed.");
                 return;
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public virtual void OnActive()
+        {
+
         }
 
         // Start is called before the first frame update
@@ -172,68 +192,6 @@ namespace MX
 
         }
 
-        public void Show()
-        {
-            this.ShowImpl();
-        }
-
-        public void Close()
-        {
-            this.CloseImpl();
-        }
-
-        protected virtual void OnShowing()
-        {
-        }
-
-        protected virtual void OnClosing()
-        {
-        }
-
-        protected virtual void OnShow()
-        {
-            this.gameObject.SetActive(true);
-        }
-
-        protected virtual void OnClose()
-        {
-             this.gameObject.SetActive(false);
-        }
-
-        protected void ShowImpl()
-        {
-            if(this._status == UIElementStatus.Ready || this._status == UIElementStatus.Closed)
-            {
-                this._status = UIElementStatus.Opening;
-                this.OnShowing();
-            }
-        }
-
-        protected void CloseImpl()
-        {
-            if (this._status == UIElementStatus.Ready || this._status == UIElementStatus.Opened)
-            {
-                this._status = UIElementStatus.Closing;
-                this.OnClosing();
-            }
-        }
-
-        protected virtual void UpdateStatus()
-        {
-            if(this._status == UIElementStatus.Opening)
-            {
-                this.OnShow();
-                this._status = UIElementStatus.Opened;
-            } else if(this._status == UIElementStatus.Closing) {
-                this._status = UIElementStatus.Closed;
-                this.OnClose();
-            }
-        }
-
-        void FixUpdate()
-        {
-            this.UpdateStatus();
-        }
 
         // Update is called once per frame
         void Update()

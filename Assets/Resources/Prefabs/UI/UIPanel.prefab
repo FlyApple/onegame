@@ -146,12 +146,12 @@ GameObject:
   - component: {fileID: 1260688599027541464}
   - component: {fileID: 1136761198879892246}
   m_Layer: 0
-  m_Name: UIView
+  m_Name: UIPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1260688599027541464
 RectTransform:
   m_ObjectHideFlags: 0
@@ -185,9 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d60523b9c1bc4f678f528b0d63f0046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _index: -1
-  _ready: 0
-  _active: 1
+  _status: 0
   panelDemo: {fileID: 0}
   button_demo1: {fileID: 7002244014080880498}
 --- !u!1 &3343258877772412883

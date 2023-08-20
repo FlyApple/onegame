@@ -4,7 +4,7 @@ using UnityEngine;
 
 using MX;
 
-public class UIDemoLayout : UISafeAreaLayout
+public class UIDemoLayout : UILayout
 {
     protected override UILayoutID GetID() { return UILayoutID.User + 1; }
 

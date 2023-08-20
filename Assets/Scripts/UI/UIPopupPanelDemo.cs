@@ -15,10 +15,9 @@ public class UIPopupPanelDemo : UIPopupPanel
 
     }
 
-    // Start is called before the first frame update
-    void Start()
+    void Ready()
     {
-        
+
     }
 
     // Update is called once per frame

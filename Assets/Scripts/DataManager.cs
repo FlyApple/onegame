@@ -8,7 +8,7 @@ using UnityEditor;
 //
 public interface TIData
 {
-    public static string name { get; }
+    //static string name { get; }
 }
 
 //

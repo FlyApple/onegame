@@ -12,7 +12,7 @@ namespace MX
         //
         None = -1,
         Base = 0,
-        SafeArea = 1,
+
         //
         User = 100,
     }
@@ -27,11 +27,15 @@ namespace MX
         public virtual void SetIndex(int index) { this._index = index; }
         protected UILayoutID _ID = UILayoutID.None;
         public UILayoutID ID { get { return this._ID; } }
-        protected virtual UILayoutID GetID()  { return UILayoutID.Base; }
+        protected virtual UILayoutID GetID()  { return UILayoutID.None; }
 
         //
         protected Camera _camera;
         protected Canvas _canvas;
+
+        //
+        [SerializeField]
+        protected List<UIView> _views = new List<UIView>();
 
         void Awake()
         {
@@ -51,7 +55,50 @@ namespace MX
 
         protected virtual void OnReady()
         {
+            int count = this.transform.childCount;
+            for (int i = 0; i < count; i++)
+            {
+                var child = this.transform.GetChild(i).GetComponent<UIView>();
+                if (child == null)
+                {
+                    continue;
+                }
 
+                if(!this.InvokeReadyMethod(child, child.GetType()))
+                {
+                    continue;
+                }
+
+                this._views.Add(child);
+            }
+        }
+
+        public bool InvokeElementReadyMethod(object reference, System.Type type)
+        {
+            return this.InvokeReadyMethod(reference, type);
+        }
+
+        private bool InvokeReadyMethod(object reference, System.Type type)
+        {
+            System.Reflection.MethodInfo method = type.GetMethod("Ready",
+                System.Reflection.BindingFlags.NonPublic |
+                System.Reflection.BindingFlags.DeclaredOnly |
+                //System.Reflection.BindingFlags.FlattenHierarchy |
+                System.Reflection.BindingFlags.InvokeMethod |
+                System.Reflection.BindingFlags.Instance);
+            if(method == null)
+            {
+                if (type == typeof(MonoBehaviour))
+                {
+                    return true;
+                }
+            }
+
+            if (method != null)
+            {
+                method.Invoke(reference, new object[] { });
+            }
+            return this.InvokeReadyMethod(reference, type.BaseType);
         }
 
         // Start is called before the first frame update
