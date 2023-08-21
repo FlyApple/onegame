@@ -19,6 +19,7 @@ namespace MX
 
     //
     [RequireComponent(typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster))]
+    [RequireComponent(typeof(AudioSource))]
     public class UILayout : MonoBehaviour
     {
         //
@@ -32,20 +33,43 @@ namespace MX
         //
         protected Camera _camera;
         protected Canvas _canvas;
+        [SerializeField]
+        protected int _canvas_layerorder = 1;
 
         //
         [SerializeField]
         protected List<UIView> _views = new List<UIView>();
 
+        //
+        private AudioSource _audio_sound_primary;
+        private AudioSource _audio_sound_secondary;
+
+        //
         void Awake()
         {
             var camera = GameObject.FindObjectOfType<Camera>();
             this._canvas = this.GetComponent<Canvas>();
+            this._canvas.sortingOrder = this._canvas_layerorder;
             if (this._canvas.worldCamera == null)
             {
                 this._canvas.worldCamera = camera;
             }
             this._camera = this._canvas.worldCamera;
+
+            //
+            var audios = this.GetComponents<AudioSource>();
+            if(audios.Length > 0)
+            {
+                this._audio_sound_primary = audios[0];
+            }
+            if (audios.Length > 1)
+            {
+                this._audio_sound_primary = audios[1];
+            }
+            if (this._audio_sound_primary == null) { this._audio_sound_primary = this.gameObject.AddComponent<AudioSource>(); }
+            if (this._audio_sound_secondary == null) { this._audio_sound_secondary = this.gameObject.AddComponent<AudioSource>(); }
+            this._audio_sound_primary.enabled = false;
+            this._audio_sound_secondary.enabled = false;
 
             //
             UIManager.InitLayout(this);
@@ -105,6 +129,49 @@ namespace MX
         void Start()
         {
 
+        }
+
+        //
+        public void PlayingSound(AudioClip clip, bool primary = true)
+        {
+            if (clip == null)
+            {
+                return;
+            }
+
+            if (!primary)
+            {
+                this._audio_sound_secondary.clip = clip;
+                this._audio_sound_secondary.enabled = true;
+                this._audio_sound_secondary.Play();
+            }
+            else
+            {
+                this._audio_sound_primary.clip = clip;
+                this._audio_sound_primary.enabled = true;
+                this._audio_sound_primary.Play();
+            }
+        }
+
+        private void CheckingPlayingSound()
+        {
+            if (this._audio_sound_primary.enabled && !this._audio_sound_primary.isPlaying)
+            {
+                this._audio_sound_primary.enabled = false;
+            }
+            if (this._audio_sound_secondary.enabled && !this._audio_sound_secondary.isPlaying)
+            {
+                this._audio_sound_secondary.enabled = false;
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        void FixedUpdate()
+        {
+            this.CheckingPlayingSound();    
         }
 
         // Update is called once per frame

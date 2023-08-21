@@ -186,6 +186,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _status: 0
+  _active: 1
+  _checkready: 0
+  _panelstatus: -1
+  _showing_delay: 0.1
+  _closing_delay: 0.1
   panelDemo: {fileID: 0}
   button_demo1: {fileID: 7002244014080880498}
 --- !u!1 &3343258877772412883
@@ -321,8 +326,9 @@ GameObject:
   - component: {fileID: 7275641781472973490}
   - component: {fileID: 4374939347231680510}
   - component: {fileID: 1111265538221374211}
+  - component: {fileID: 5631359928134136718}
   m_Layer: 0
-  m_Name: Panel
+  m_Name: Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -387,3 +393,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5631359928134136718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8617155574957462580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04b8ae5eb6d25f44d9f43eefdf94f5d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _status: 0
+  _parent: {fileID: 0}
+  _mask_on: 0
+  _mask_alpha: 0.4
+  image_background: {fileID: 0}

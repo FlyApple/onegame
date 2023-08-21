@@ -16,7 +16,7 @@ namespace MX
         Closing = 10,
     }
 
-
+    
     public class UIPanel : UIElement
     {
         public static new UIElementID TID { get { return UIElementID.PanelNone; } }
@@ -41,6 +41,11 @@ namespace MX
         public override void OnInitialize()
         {
             base.OnInitialize();
+
+            var rt = this.GetComponent<RectTransform>();
+            rt.anchorMax = new Vector2(1.0f, 1.0f);
+            rt.anchorMin = new Vector2(0.0f, 0.0f);
+            rt.pivot = new Vector2(0.5f, 0.5f);
         }
 
         protected override void OnReady()

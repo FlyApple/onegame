@@ -522,11 +522,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 874193588}
     m_Modifications:
-    - target: {fileID: 1136761198879892246, guid: 6ce79cb4e29144052a74171ad118dc86,
-        type: 3}
-      propertyPath: _active
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1260688599027541464, guid: 6ce79cb4e29144052a74171ad118dc86,
         type: 3}
       propertyPath: m_Pivot.x
@@ -640,7 +635,7 @@ PrefabInstance:
     - target: {fileID: 3237094119691937183, guid: 6ce79cb4e29144052a74171ad118dc86,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ce79cb4e29144052a74171ad118dc86, type: 3}
@@ -852,7 +847,7 @@ GameObject:
   - component: {fileID: 874193588}
   - component: {fileID: 874193590}
   - component: {fileID: 874193591}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: SafeArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1135,7 +1130,8 @@ GameObject:
   - component: {fileID: 1494659794}
   - component: {fileID: 1494659793}
   - component: {fileID: 1494659797}
-  m_Layer: 5
+  - component: {fileID: 1494659798}
+  m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1237,7 +1233,104 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70016bf79cbfaf04d8e7702f5cf05de1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canvas_layerorder: 1
   _views: []
+--- !u!82 &1494659798
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494659792}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!224 &1517764819 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 593345483343617383, guid: dc4bc1d80e66d4dc8854f6b9a01c0b00,

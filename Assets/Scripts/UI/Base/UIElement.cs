@@ -22,6 +22,11 @@ namespace MX
 
         //Dialog
         DialogNone = 2000,
+
+        //Child
+        ChildNone = 10000,
+        //Child container
+        Container = ChildNone + 1,
     }
 
     public enum UIElementStatus
@@ -171,7 +176,8 @@ namespace MX
             }
             this._ID = Id;
             this._layout = this.transform.root.GetComponent<UILayout>();
-            if(!UIManager.InitElement(this))
+
+            if(!(this._ID >= UIElementID.ChildNone) && !UIManager.InitElement(this))
             {
                 Debug.LogWarning("[UIElement] (Initialize) Init Element (" + Id + ") failed.");
                 return;
