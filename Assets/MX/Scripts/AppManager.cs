@@ -105,6 +105,7 @@ public class AppManager : MonoBehaviour
         //
         DataManager.Load();
 
+        
         //
         if (this.DontDestroy)
         {

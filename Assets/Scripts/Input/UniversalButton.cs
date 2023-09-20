@@ -79,6 +79,16 @@ namespace MCS {
         }
 
         protected virtual void Awake() {
+
+            if(this.scaler == null)
+            {
+                this.scaler = this.transform.parent.GetComponent<CanvasScaler>();
+                if(this.scaler == null)
+                {
+                    this.scaler = this.transform.root.GetComponent<CanvasScaler>();
+                }
+            }
+
             if (isAimable) {
                 aimer.gameObject.SetActive(false);
                 pointer.gameObject.SetActive(false);
@@ -228,11 +238,29 @@ namespace MCS {
         }
 
         protected virtual void UpdateAiming(PointerEventData eventData) {
+
             fingerPosition.x = eventData.position.x;
             fingerPosition.y = eventData.position.y;
-            rawDir = fingerPosition - aimer.position;
+            if(scaler != null)
+            {
+                Canvas canvas = scaler.GetComponent<Canvas>();
+                if(canvas.renderMode == RenderMode.ScreenSpaceCamera)
+                {
+                    Camera camera = canvas.worldCamera;
+                    Vector2 position = new Vector2(0.0f, 0.0f);
+                    RectTransformUtility.ScreenPointToLocalPointInRectangle(aimer.GetComponent<RectTransform>(), fingerPosition, camera, out position);
+                    //RectTransformUtility.ScreenPointToWorldPointInRectangle(canvas.GetComponent<RectTransform>(), fingerPosition, camera, out position);
+                    fingerPosition.x = position.x;
+                    fingerPosition.y = position.y;
+                }
+            }
+
+            //rawDir = fingerPosition - aimer.position;
+            //rawDir = Vector3.ClampMagnitude(rawDir, aimerRadius);
+            //pointer.position = aimer.position + rawDir;
+            rawDir = fingerPosition - aimer.localPosition;
             rawDir = Vector3.ClampMagnitude(rawDir, aimerRadius);
-            pointer.position = aimer.position + rawDir;
+            pointer.localPosition = aimer.localPosition + rawDir;
 
             this.UpdateDirection();
             if (debugLog) {
@@ -307,15 +335,21 @@ namespace MCS {
         }
 
         public virtual void UpdateBound() {
-            btnRadius = btn.rect.width / 2f * scaler.scaleFactor;
+            float factor = 1.0f;
+            if(scaler != null)
+            {
+                factor = scaler.scaleFactor;
+            }
+
+            btnRadius = btn.rect.width / 2f * factor;
             if (debugLog) {
                 Debug.Log("[MCS] " + this.gameObject.name + " >> " + btnRadius + " = " + btn.sizeDelta.x / 2f);
             }
             if (isAimable) {
-                aimerRadius = aimer.rect.width / 2f * scaler.scaleFactor;
+                aimerRadius = aimer.rect.width / 2f * factor;
             }
             if (skillCanceller != null) {
-                cancellerRadius = skillCanceller.rect.width / 2f * scaler.scaleFactor;
+                cancellerRadius = skillCanceller.rect.width / 2f * factor;
             }
         }
     }
