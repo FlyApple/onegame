@@ -25,7 +25,7 @@ public class UIPanelDemo : UIPanel
         //
         this.button_demo1.onClick.AddListener(() =>
         {
-            UIManager.GetElement<UIPopupPanelDemo>().Show((result) => {
+            MX.UIManager.GetElement<UIPopupPanelDemo>().Show((result) => {
 
             });
         });

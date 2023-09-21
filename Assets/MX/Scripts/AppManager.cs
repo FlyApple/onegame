@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class AppManager : MonoBehaviour
 {
     private static AppManager _manager = null;
-    private static DataManager _data_manager = null;
+    private static MX.DataManager _data_manager = null;
     public static AppManager Instance
     {
         get
@@ -19,7 +19,7 @@ public class AppManager : MonoBehaviour
                 AppManager manager = GameObject.FindObjectOfType<AppManager>();
                 AppManager._manager = manager;
 
-                AppManager._data_manager = new DataManager(manager);
+                AppManager._data_manager = new MX.DataManager(manager);
                 AppManager._manager.OnInitialize();
 
             }
@@ -50,7 +50,7 @@ public class AppManager : MonoBehaviour
     }
 
     public static void Vibrate() {
-        if (DataManager.AppStats.enabled_vibrate)
+        if (MX.DataManager.AppStats.enabled_vibrate)
         {
             //Vibration.vibrator(100);
         }
@@ -103,7 +103,7 @@ public class AppManager : MonoBehaviour
     private void OnInitialize()
     {
         //
-        DataManager.Load();
+        MX.DataManager.Load();
 
         
         //
@@ -127,15 +127,15 @@ public class AppManager : MonoBehaviour
         this._time_start = Time.realtimeSinceStartup;
 
         //
-        DataManager.HandleApplicationLaunch();
+        MX.DataManager.HandleApplicationLaunch();
 
         //
-        Debug.Log("[App] Launch (count:" + DataManager.AppStats.launch_count + ")");
+        Debug.Log("[App] Launch (count:" + MX.DataManager.AppStats.launch_count + ")");
     }
 
     void OnApplicationQuit()
     {
-        DataManager.HandleApplicationQuit();
+        MX.DataManager.HandleApplicationQuit();
 
         Debug.Log("[AppManager] : OnApplicationQuit");
     }
@@ -144,7 +144,7 @@ public class AppManager : MonoBehaviour
     {
         // 需要调用
         long start_time = AppManager.Instance.TimeStamp64;
-        DataManager.HandleApplicationPause(isPaused, start_time);
+        MX.DataManager.HandleApplicationPause(isPaused, start_time);
 
         Debug.Log("[AppManager] : OnApplicationPause = " + isPaused);
 

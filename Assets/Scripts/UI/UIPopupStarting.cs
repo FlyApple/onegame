@@ -40,7 +40,7 @@ public class UIPopupStarting : MX.UIPopupPanel
         MX.UIManager.GetElement<UIPopupStarting>().Close(1);
 
         //
-
+        UIManager.Instance.LevelStart();
     }
 
     // Update is called once per frame

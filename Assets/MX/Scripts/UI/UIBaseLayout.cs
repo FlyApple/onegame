@@ -14,6 +14,7 @@ namespace MX
             base.OnReady();
 
         }
+
         // Start is called before the first frame update
         void Start()
         {

@@ -96,6 +96,7 @@ MonoBehaviour:
   _panelstatus: -1
   _showing_delay: 0.1
   _closing_delay: 0.1
+  _time_meter: {fileID: 5923395967692758307}
 --- !u!1 &2022341734274731855
 GameObject:
   m_ObjectHideFlags: 0
