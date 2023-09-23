@@ -87,8 +87,11 @@ namespace MX
             }
         }
 
-        void FixedUpdate()
+        public override void OnUpdate()
         {
+            base.OnUpdate();
+
+            //
             this._level_tick += Time.fixedDeltaTime;
         }
 

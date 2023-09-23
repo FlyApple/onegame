@@ -2,31 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 namespace MX
 {
-
-    public class BaseManager : Behaviour
+    public class CameraRoot : Behaviour
     {
-        public override void OnInitialize()
-        {
-            base.OnInitialize();
-        }
+        [SerializeField]
+        private Transform _cameraH;
+        [SerializeField]
+        private Transform _cameraV;
+        [SerializeField]
+        private Camera _camera;
 
+        //
         protected override void OnReady()
         {
             base.OnReady();
+
+            this._cameraH = this.transform.Find("H");
+            this._cameraV = this.transform.Find("H/V");
+            this._camera = this.transform.Find("H/V").GetComponentInChildren<Camera>();
         }
 
         // Start is called before the first frame update
         void Start()
         {
 
-        }
-
-        public double Timestamp64()
-        {
-            long ticks = System.DateTime.Now.Ticks;
-            return (double)ticks / System.TimeSpan.TicksPerMillisecond;
         }
 
         public override void OnUpdate()

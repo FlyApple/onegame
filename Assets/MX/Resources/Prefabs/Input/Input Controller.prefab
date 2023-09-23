@@ -344,7 +344,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7648572357215201495}
   - component: {fileID: 5527283233925822555}
-  - component: {fileID: 1580591289539833687}
+  - component: {fileID: 4151193391110365221}
   m_Layer: 0
   m_Name: Input Controller
   m_TagString: Untagged
@@ -383,7 +383,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7648572357215201492}
   m_CullTransparentMesh: 1
---- !u!114 &1580591289539833687
+--- !u!114 &4151193391110365221
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

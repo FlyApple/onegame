@@ -10,13 +10,19 @@ public class GameManager : MX.GameManager
         get { return _instance; }
     }
 
-    //
     [SerializeField]
-    private InputController _input_controller = null;
+    private Character _character;
+    [SerializeField]
+    private ThridCharacterController _character_controller;
+
+    public override void OnInitialize()
+    {
+        GameManager._instance = this;
+        base.OnInitialize();
+    }
 
     protected override void OnReady()
     {
-        GameManager._instance = this;
         base.OnReady();
 
     }
@@ -25,7 +31,7 @@ public class GameManager : MX.GameManager
     {
         base.LevelStart();
 
-        this._input_controller = UIManager.Instance.input_controller;
+        this._character_controller.InitCharacter(this._character);
     }
 
     public override void LevelEnd(bool success = true)
@@ -33,7 +39,6 @@ public class GameManager : MX.GameManager
         base.LevelEnd(success);
 
         UIManager.Instance.LevelEnd(success);
-        this._input_controller = null;
     }
 
     // Start is called before the first frame update

@@ -11,8 +11,8 @@ public class UIManager : MX.UIBaseLayout
     }
 
     [SerializeField]
-    private InputController _input_controller = null;
-    public InputController input_controller { get { return this._input_controller; } }
+    private MX.InputController _input_controller = null;
+    public MX.InputController input_controller { get { return this._input_controller; } }
 
     //
     protected override void OnReady()
@@ -26,12 +26,11 @@ public class UIManager : MX.UIBaseLayout
     public virtual void LevelStart()
     {
         GameManager.Instance.LevelStart();
-        this._input_controller.gameObject.SetActive(true);
+
     }
 
     public virtual void LevelEnd(bool success = true)
     {
-        this._input_controller.gameObject.SetActive(false);
     }
 
     // Start is called before the first frame update
