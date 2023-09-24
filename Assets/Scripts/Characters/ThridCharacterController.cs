@@ -41,7 +41,6 @@ public class ThridCharacterController : MX.Behaviour
 
     protected virtual void OnLevelStart(MX.ILevelData data)
     {
-        Debug.Log("Test start");
         this._input_controller.gameObject.SetActive(true);
     }
 
@@ -51,9 +50,54 @@ public class ThridCharacterController : MX.Behaviour
         //this._input_controller = null;
     }
 
+    protected virtual void OnUpdateCharacter()
+    {
+        Vector3 direction = this._input_controller.actor.directionXZ;
+        if (this._character == null)
+        {
+            return;
+        }
+
+        //
+        if (this._input_controller.actor.isFingerDown)
+        {
+            //
+            this._character.UpdateMovement(direction);
+
+        }
+        else
+        {
+            //
+            this._character.UpdateMovement(Vector3.zero);
+
+        }
+
+        //
+        this.UpdatePosition(this._character);
+    }
+
+    protected void UpdatePosition(Character character)
+    {
+        Vector3 destination = new Vector3(character.transform.position.x,
+            0.0f,
+            character.transform.position.z);
+        this.UpdatePositionFinal(destination);
+    }
+
+    protected void UpdatePositionFinal(Vector3 destination)
+    {
+
+        //
+        this._camera.transform.position = new Vector3(destination.x, this._camera.transform.position.y, destination.z);
+        this.transform.position = new Vector3(destination.x, this.transform.position.y, destination.z);
+    }
+
     public override void OnUpdate()
     {
         base.OnUpdate();
+
+        //
+        this.OnUpdateCharacter();
     }
 
     // Update is called once per frame

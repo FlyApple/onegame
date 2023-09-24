@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f66eb74741aa4b898c0580eb6a2fc27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugLog: 1
+  debugLog: 0
   scaler: {fileID: 0}
   isAimable: 1
   btn: {fileID: 0}
