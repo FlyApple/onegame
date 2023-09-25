@@ -11,6 +11,7 @@ namespace MX
         void Ready();
         void OnInitialize();
         void OnUpdate();
+        void OnUpdateFrame();
     }
 
     public enum BehaviourStatus
@@ -70,6 +71,11 @@ namespace MX
             }
         }
 
+        // Update is called once per frame
+        public virtual void OnUpdateFrame()
+        {
+
+        }
 
         void FixedUpdate()
         {
@@ -79,7 +85,7 @@ namespace MX
         // Update is called once per frame
         void Update()
         {
-           
+            this.OnUpdateFrame();
         }
     }
 

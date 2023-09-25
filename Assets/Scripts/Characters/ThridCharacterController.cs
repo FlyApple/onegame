@@ -9,6 +9,12 @@ public class ThridCharacterController : MX.Behaviour
     private MX.CameraRoot _camera;
     [SerializeField]
     private Character _character;
+
+    //
+    [SerializeField]
+    private bool _jumping;
+    private float _jumping_time;
+
     //
     private MX.InputController _input_controller = null;
 
@@ -52,24 +58,39 @@ public class ThridCharacterController : MX.Behaviour
 
     protected virtual void OnUpdateCharacter()
     {
-        Vector3 direction = this._input_controller.actor.directionXZ;
         if (this._character == null)
         {
             return;
         }
 
         //
-        if (this._input_controller.actor.isFingerDown)
+        Vector3 direction = Vector3.zero; 
+        if (this._input_controller.is_actor_down)
         {
-            //
-            this._character.UpdateMovement(direction);
-
+            direction = this._input_controller.directionXZ;
         }
-        else
-        {
-            //
-            this._character.UpdateMovement(Vector3.zero);
 
+        if(this._input_controller.is_jumping)
+        {
+            if (this._jumping == false)
+            {
+                this._jumping = true;
+                this._jumping_time = 0.0f;
+            }
+            
+        }
+
+        if(this._jumping)
+        {
+            this._jumping_time += Time.fixedDeltaTime;
+
+            direction += Vector3.up;
+        }
+
+        this._character.UpdateMovement(direction);
+        if(!this._character.is_jumping)
+        {
+            this._jumping = false;
         }
 
         //
