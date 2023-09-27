@@ -2,9 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum CharacterType
+{
+    None = -1,
+    Base = 0,
+}
+
 [RequireComponent(typeof(CapsuleCollider))]
 public class Character : MX.StateBehaviour
-{ 
+{
+    [SerializeField]
+    private int _index = -1;
+    [SerializeField]
+    private CharacterType _type = CharacterType.None;
+
+    //
+    private MX.BaseController _controller = null;
+    public bool has_controller { get { return this._controller != null; } }
+
+    [SerializeField]
+    private bool _on_ground = false;
+    [SerializeField]
+    private LayerMask _ground_layer;
+
     //
     [SerializeField, Range(1.0f, 20.0f)]
     private float _gravity_velocity = 9.8f;
@@ -22,6 +42,27 @@ public class Character : MX.StateBehaviour
     void Start()
     {
         
+    }
+
+    public virtual bool InitCharacter(CharacterData data)
+    {
+        this._index = data.index;
+        this._type = data.type;
+        return true;
+    }
+
+    public bool AddController(MX.BaseController controller)
+    {
+        this._controller = controller;
+
+        return true;
+    }
+
+    public bool RemoveController()
+    {
+        this._controller = null;
+
+        return true;
     }
 
     public void UpdateMovement(Vector3 direction)
@@ -55,19 +96,48 @@ public class Character : MX.StateBehaviour
         // Jump
         if(direction.y > 0.0f)
         {
-            float velocity = this._jump_velocity * Mathf.Max(1.0f - this._jump_time, 0.0f);
-            velocity = velocity - this._gravity_velocity * Mathf.Min(this._jump_time, 1.0f);
-
-            float v = this.transform.position.y + 1.0f * Time.fixedDeltaTime * velocity;
-
-            this.transform.position = new Vector3(this.transform.position.x, v, this.transform.position.z);
+            Vector3 offset = Vector3.up * this._jump_velocity * Mathf.Max(1.0f - this._jump_time, 0.0f) * Time.fixedDeltaTime;
+            offset = offset + Vector3.down * this._gravity_velocity * Mathf.Min(this._jump_time, 1.0f) * Time.fixedDeltaTime;
+            this.transform.position = this.transform.position + offset;
 
             this._jump_time += Time.fixedDeltaTime;
+        }
 
-            if(this.transform.position.y <= 0.0f)
+        if (!this._on_ground)
+        {
+            if(this._jump_time == 0.0f)
             {
-                this._jump_time = 0.0f;
+                Vector3 offset = Vector3.down * this._gravity_velocity * Time.fixedDeltaTime;
+                this.transform.position = this.transform.position + offset;
             }
+        }
+        else
+        {
+            this._jump_time = 0.0f;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        var go = collision.gameObject;
+        string layer = LayerMask.LayerToName(go.layer);
+        int mask = LayerMask.GetMask(layer);
+
+        if ((mask & this._ground_layer) > 0 && (go.CompareTag("Ground") || go.CompareTag("Architecture")))
+        {
+            this._on_ground = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        var go = collision.gameObject;
+        string layer = LayerMask.LayerToName(go.layer);
+        int mask = LayerMask.GetMask(layer);
+
+        if ((mask & this._ground_layer) > 0 && (go.CompareTag("Ground") || go.CompareTag("Architecture")))
+        {
+            this._on_ground = false;
         }
     }
 

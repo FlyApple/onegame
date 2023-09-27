@@ -31,12 +31,15 @@ public class GameManager : MX.GameManager
     {
         base.LevelStart();
 
-        this._character_controller.InitCharacter(this._character);
+        //
+        this._character_controller.SetCharacter(this._character);
     }
 
     public override void LevelEnd(bool success = true)
     {
         base.LevelEnd(success);
+
+        this._character_controller.FreeCharacter(this._character);
 
         UIManager.Instance.LevelEnd(success);
     }

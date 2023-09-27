@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class ThridCharacterController : MX.Behaviour
+public class ThridCharacterController : MX.BaseController
 {
     [SerializeField]
-    private MX.CameraRoot _camera;
-    [SerializeField]
     private Character _character;
+    //
+    private Vector3 _direction_move;
 
     //
     [SerializeField]
@@ -16,8 +16,6 @@ public class ThridCharacterController : MX.Behaviour
     private float _jumping_time;
 
     //
-    private MX.InputController _input_controller = null;
-
     public override void OnInitialize()
     {
         base.OnInitialize();
@@ -30,6 +28,7 @@ public class ThridCharacterController : MX.Behaviour
         GameManager.Instance.OnLevelStartListener += OnLevelStart;
         GameManager.Instance.OnLevelEndListener += OnLevelEnd;
 
+        //
         this._input_controller = UIManager.Instance.input_controller;
     }
 
@@ -39,10 +38,23 @@ public class ThridCharacterController : MX.Behaviour
 
     }
 
-    public bool InitCharacter(Character character)
+    public bool SetCharacter(Character character)
     {
         this._character = character;
+        this._direction_move = Vector3.zero;
+
+        this._jumping = false;
+        this._jumping_time = 0.0f;
+
         return true;
+    }
+
+    public void FreeCharacter(Character character)
+    {
+        this._character = null;
+
+        //
+        this._direction_move = Vector3.zero;
     }
 
     protected virtual void OnLevelStart(MX.ILevelData data)
@@ -53,12 +65,11 @@ public class ThridCharacterController : MX.Behaviour
     protected virtual void OnLevelEnd(MX.ILevelData data)
     {
         this._input_controller.gameObject.SetActive(false);
-        //this._input_controller = null;
     }
 
-    protected virtual void OnUpdateCharacter()
+    protected virtual void OnUpdateCharacter(Character character)
     {
-        if (this._character == null)
+        if (character == null)
         {
             return;
         }
@@ -87,18 +98,31 @@ public class ThridCharacterController : MX.Behaviour
             direction += Vector3.up;
         }
 
-        this._character.UpdateMovement(direction);
-        if(!this._character.is_jumping)
+        this._direction_move = direction;
+    }
+
+    protected virtual void OnUpdateCharacterMove(Character character)
+    {
+        if (character == null)
+        {
+            return;
+        }
+
+        character.UpdateMovement(this._direction_move);
+        if (!character.is_jumping)
         {
             this._jumping = false;
         }
-
-        //
-        this.UpdatePosition(this._character);
+        this.UpdatePosition(character);
     }
 
     protected void UpdatePosition(Character character)
     {
+        if(character == null)
+        {
+            return;
+        }
+
         Vector3 destination = new Vector3(character.transform.position.x,
             0.0f,
             character.transform.position.z);
@@ -107,7 +131,6 @@ public class ThridCharacterController : MX.Behaviour
 
     protected void UpdatePositionFinal(Vector3 destination)
     {
-
         //
         this._camera.transform.position = new Vector3(destination.x, this._camera.transform.position.y, destination.z);
         this.transform.position = new Vector3(destination.x, this.transform.position.y, destination.z);
@@ -118,13 +141,16 @@ public class ThridCharacterController : MX.Behaviour
         base.OnUpdate();
 
         //
-        this.OnUpdateCharacter();
+        this.OnUpdateCharacter(this._character);
     }
 
     // Update is called once per frame
-    void Update()
+    public override void OnUpdateFrame()
     {
+        base.OnUpdateFrame();
 
+        //
+        this.OnUpdateCharacterMove(this._character);
     }
 }
 
